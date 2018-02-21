@@ -17,6 +17,8 @@ public class App {
 		         
 		em.getTransaction().begin();*/
 
+	//Added new comment
+	public static void main(String[] args) {
 		AccountService service = new AccountService();
 		JSONUtil util = new JSONUtil();
 		Account joeBloggs = new Account("Joe", "Bloggs", "1234");
@@ -35,5 +37,7 @@ public class App {
 		 emf.close();*/
 
 	}
-	
+
+	}
+
 }
