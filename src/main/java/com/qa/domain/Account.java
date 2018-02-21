@@ -1,5 +1,8 @@
 package com.qa.domain;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Account {
 
 	private String firstName;
