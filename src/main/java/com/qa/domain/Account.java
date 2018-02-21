@@ -1,9 +1,16 @@
 package com.qa.domain;
 
-public class Account {
+import javax.persistence.*;
 
+@Entity
+public class Account {
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long accntId;
+	@Column
 	private String firstName;
+	@Column
 	private String secondName;
+	@Column
 	private String accountNumber;
 
 	public Account(String firstName, String secondName, String accountNumber) {
