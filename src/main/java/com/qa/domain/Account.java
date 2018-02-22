@@ -12,6 +12,9 @@ public class Account {
 	private String secondName;
 	@Column
 	private String accountNumber;
+	
+	public Account() {
+	}
 
 	public Account(String firstName, String secondName, String accountNumber) {
 		this.firstName = firstName;

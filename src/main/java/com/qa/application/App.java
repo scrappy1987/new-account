@@ -6,7 +6,7 @@ import com.qa.util.JSONUtil;
 
 public class App {
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		//adding a comment
 		AccountService service = new AccountService();
 		JSONUtil util = new JSONUtil();
@@ -17,6 +17,6 @@ public class App {
 		String mapAsJSON = util.getJSONForObject(service.getAccountMap());
 		System.out.println("This is the account map as JSON " + mapAsJSON);
 
-	}
+	}*/
 
 }
