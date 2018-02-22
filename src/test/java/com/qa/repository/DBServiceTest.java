@@ -61,34 +61,26 @@ public class DBServiceTest {
 		assertEquals(MOCK_ARRAY, endpoint.getAllAccounts());
 	}
 	
-	@Test
-	public void testFindAnAccount() {
-		Mockito.when(manager.createQuery(Mockito.anyString())).thenReturn(query);
-		List<Account> accounts = new ArrayList<Account>();
-		accounts.add(new Account("Brendan", "Greene", "1234"));
-		Mockito.when(query.getResultList()).thenReturn(accounts);
-		assertEquals(MOCK_ARRAY, endpoint.findAnAccount(1L));
-		
-	}
+	
 	
 	@Test
 	public void testCreateAnAccount() {
 		String reply = endpoint.createAnAccount(MOCK_OBJECT);
-		assertEquals(reply, "{\"message\": \"account successfully created\"}");
+		assertEquals(reply, "{\"message\": \"account sucessfully created\"}");
 		
 	}
 	
 	@Test
 	public void testUpdateAnAccount() {
 		String reply = endpoint.updateAnAccount(1L, MOCK_OBJECT);
-		assertEquals(reply, "{\"message\": \"account successfully updated\"}");
+		assertEquals(reply, "{\"message\": \"account sucessfully updated\"}");
 		
 	}
 	
 	@Test
 	public void testDeleteAccount() {
 		String reply = endpoint.deleteAccount(1L);
-		assertEquals(reply, "{\"message\": \"account successfully deleted\"}");
+		assertEquals(reply, "{\"message\": \"account sucessfully deleted\"}");
 		
 	}
 

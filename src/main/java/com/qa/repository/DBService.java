@@ -1,44 +1,74 @@
 package com.qa.repository;
 
+import static javax.transaction.Transactional.TxType.SUPPORTS;
+import static javax.transaction.Transactional.TxType.REQUIRED;
+
+import java.util.Collection;
+
+import javax.inject.Inject;
+
+
+
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
+
+import com.qa.domain.Account;
 import com.qa.util.JSONUtil;
 
-
+@Transactional(SUPPORTS)
 public class DBService {
+	
+	@PersistenceContext(unitName = "primary")
+	private EntityManager manager;
+	
+	@Inject
+	private JSONUtil util;
 
 	public void setManager(EntityManager manager) {
-		// TODO Auto-generated method stub
-		
+		this.manager = manager;
 	}
 
-	public void setUtil(JSONUtil util) {
-		// TODO Auto-generated method stub
-		
+	public void setUtil(JSONUtil util)  {
+		this.util = util;
 	}
 
 	public String getAllAccounts() {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = manager.createQuery("Select a FROM Account a");
+		Collection<Account> accounts = (Collection<Account>) query.getResultList();
+		return util.getJSONForObject(accounts);
 	}
 
-	public Object findAnAccount(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object findAnAccount(long id){
+		return manager.find(Account.class, id);
 	}
 
+	@Transactional(REQUIRED)
 	public String createAnAccount(String mockObject) {
-		// TODO Auto-generated method stub
-		return null;
+		Account anAccount = util.getObjectForJSON(mockObject, Account.class);
+		manager.persist(anAccount);
+		return "{\"message\": \"account sucessfully created\"}";
 	}
-
+	
+	@Transactional(REQUIRED)
 	public String updateAnAccount(long id, String mockObject) {
-		// TODO Auto-generated method stub
-		return null;
+		Account updatedAccount = util.getObjectForJSON(mockObject, Account.class);
+		Account accountFromDB = (Account) findAnAccount(id);
+		if (mockObject != null) {
+			accountFromDB = updatedAccount;
+			manager.merge(accountFromDB);
+		}
+		return "{\"message\": \"account sucessfully updated\"}";
 	}
 
-	public String deleteAccount(long l) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional(REQUIRED)
+	public String deleteAccount(long id) {
+		Account accountInDB = (Account) findAnAccount(id);
+		if (accountInDB != null) {
+			manager.remove(accountInDB);
+		}
+		return "{\"message\": \"account sucessfully deleted\"}";
 	}
 	
 	
