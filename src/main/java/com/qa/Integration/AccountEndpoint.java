@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.qa.repository.DBService;
+import com.qa.repository.DBServiceImpl;
 
 
 @Path("/account")
@@ -20,7 +21,7 @@ import com.qa.repository.DBService;
 public class AccountEndpoint {
 	
 	@Inject
-	DBService dbServ;
+	DBServiceImpl dbServ;
 	
 	@Path("/json")
 	@GET

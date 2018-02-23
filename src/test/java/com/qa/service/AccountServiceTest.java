@@ -1,4 +1,4 @@
-package com.qa.service;
+/*package com.qa.service;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,3 +59,4 @@ public class AccountServiceTest {
 	}
 
 }
+*/

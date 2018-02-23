@@ -1,5 +1,6 @@
 package com.qa.repository;
 
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +16,8 @@ import com.qa.Integration.AccountEndpoint;
 import com.qa.domain.Account;
 import com.qa.util.JSONUtil;
 @Transactional(SUPPORTS)
-public class DBService {
+@Default
+public class DBService implements DBServiceImpl{
 
 	@PersistenceContext(unitName="primary")
 	private EntityManager em;
