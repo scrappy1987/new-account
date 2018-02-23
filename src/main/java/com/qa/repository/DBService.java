@@ -13,6 +13,7 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 import java.util.Collection;
 
 import com.qa.Integration.AccountEndpoint;
+import com.qa.businessLogic.BLogic;
 import com.qa.domain.Account;
 import com.qa.util.JSONUtil;
 @Transactional(SUPPORTS)
@@ -28,6 +29,10 @@ public class DBService implements DBServiceImpl{
 	public String createAccount(String message) {
 		Account accnt;
 		accnt = jUtil.getObjectForJSON(message, Account.class);
+		BLogic bLog = new BLogic();
+		if(!bLog.isValid(accnt.getAccountNumber())){
+			return "{\"message\": \"This account is blocked\"}";
+		}
 		em.persist(accnt);
 		return "{\"message\": \"Account successfully added\"}";
 	}
@@ -51,6 +56,10 @@ public class DBService implements DBServiceImpl{
 		Account accntToUpdate = jUtil.getObjectForJSON(account, Account.class);
 		Account accntInDB = findAccount(id);
 		if(accntToUpdate!=null) {
+			BLogic bLog = new BLogic();
+			if(!bLog.isValid(accntToUpdate.getAccountNumber())){
+				return "{\"message\": \"This account is blocked\"}";
+			}
 			accntInDB.setFirstName(accntToUpdate.getFirstName());
 			accntInDB.setSecondName(accntToUpdate.getSecondName());
 			accntInDB.setAccountNumber(accntToUpdate.getAccountNumber());

@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
+import com.qa.businessLogic.BLogic;
 import com.qa.domain.Account;
 import com.qa.repository.DBServiceImpl;
 import com.qa.util.JSONUtil;
@@ -32,6 +33,10 @@ public class AccountService implements DBServiceImpl {
 	@Override
 	public String createAccount(String object) {
 		Account userAccount = jUtil.getObjectForJSON(object, Account.class);
+		BLogic bLog = new BLogic();
+		if(!bLog.isValid(userAccount.getAccountNumber())){
+			return "{\"message\": \"This account is blocked\"}";
+		}
 		accountMap.put(count, userAccount);
 		count++;
 		return "{\"message\": \"Account successfully added\"}";
@@ -54,10 +59,13 @@ public class AccountService implements DBServiceImpl {
 		if(accnt!=null) {
 			int intId = id.intValue();
 			Account oldAccnt = accountMap.get(intId);
+			BLogic bLog = new BLogic();
+			if(!bLog.isValid(accnt.getAccountNumber())){
+				return "{\"message\": \"This account is blocked\"}";
+			}
 			oldAccnt.setAccountNumber(accnt.getAccountNumber());
 			oldAccnt.setFirstName(accnt.getFirstName());
 			oldAccnt.setSecondName(accnt.getSecondName());
-			accountMap.put(intId, oldAccnt);
 		}
 		return "{\"message\": \"account sucessfully updated\"}";
 	}
